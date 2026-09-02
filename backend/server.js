@@ -10,7 +10,7 @@ const app = express();
 connectDB();
 
 // Allow the configured frontend origin(s) in production, plus local dev servers.
-const allowedOrigins = [process.env.FRONTEND_URL, "http://localhost:5173"].filter(Boolean);
+const allowedOrigins = [process.env.FRONTEND_URL, "http://localhost:5173", `https://the-cloud-docs.netlify.app/`].filter(Boolean);
 app.use(
   cors({
     origin: (origin, callback) => {
