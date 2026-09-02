@@ -144,6 +144,91 @@ backend for the change to take effect.
 Your app is now fully live — visiting the Vercel URL talks to the Render
 backend, which talks to MongoDB Atlas and Cloudinary.
 
+### Backend → Render (free tier)
+
+1. Push this project to a GitHub repo (the included `.gitignore` already keeps `.env` and `node_modules` out of git — **do not commit your `.env` file**).
+2. Go to [render.com](https://render.com), sign up, click **New → Web Service**, and connect your repo.
+3. Set:
+   - **Root directory:** `backend`
+   - **Build command:** `npm install`
+   - **Start command:** `npm start`
+4. Under **Environment**, add every variable from your local `backend/.env` (MONGO_URI, JWT_SECRET, JWT_EXPIRES_IN, CLOUDINARY_*, EMAIL_*, PORT). For `FRONTEND_URL`, leave it for now — you'll come back and set it after Step 4b.
+5. Deploy. Render gives you a URL like `https://cloudvault-backend.onrender.com`.
+
+### Frontend → Netlify (free tier)
+
+1. Go to [netlify.com](https://netlify.com), sign up, click **Add new site → Import an existing project**, and connect the same GitHub repo.
+2. Set:
+   - **Base directory:** `frontend`
+   - **Build command:** `npm run build`
+   - **Publish directory:** `frontend/dist`
+3. Before deploying, go to **Site configuration → Environment variables** and add:
+   ```
+   VITE_API_URL=https://cloudvault-backend.onrender.com/api
+   ```
+   (use your actual Render URL from the previous step, keeping the trailing `/api`)
+4. Deploy. Netlify gives you a URL like `https://cloudvault.netlify.app` (you can rename this under **Site configuration → Site details → Change site name**).
+
+This project already includes `frontend/public/_redirects` with the line
+`/*   /index.html   200`. This is required for Netlify — without it, routes
+like `/reset-password/:token` or `/dashboard` return a 404 on direct load or
+page refresh, because Netlify otherwise only knows about `/index.html` and
+has no idea your app handles routing client-side via React Router. Vite
+copies this file into `dist/` automatically on build, so there's nothing
+else to configure.
+
+### Final step — connect them
+
+Go back to Render, open your backend's **Environment** settings, and set:
+```
+FRONTEND_URL=https://cloudvault.netlify.app
+```
+(your actual Netlify URL). This lets the backend accept requests from your
+live frontend (CORS) and builds correct password-reset links. Redeploy the
+backend for the change to take effect.
+
+Your app is now fully live — visiting the Netlify URL talks to the Render
+backend, which talks to MongoDB Atlas and Cloudinary.
+
+
+
+## Recovery model
+
+- **Trash:** deleting a file just sets `isDeleted: true` — it's hidden from
+  the dashboard but stays in Cloudinary until permanently deleted, so it can
+  be restored.
+- **Versioning:** every upload to an existing file adds a new entry to
+  `versions[]` rather than overwriting anything. You can restore any prior
+  version as the current one.
+- **Password reset:** a reset request generates a random token, stores only
+  its SHA-256 hash on the user record (never the raw token), and expires it
+  after 1 hour. The raw token only ever appears in the emailed link.
+
+## A note on your MongoDB URI
+
+Your connection string doesn't specify a database name, so MongoDB will use
+a default database called `test`. If you'd prefer a named database (e.g.
+`cloudvault`), edit `MONGO_URI` in `backend/.env` to insert it before the
+`?`:
+```
+mongodb+srv://elite:pr08035923401@cluster0.ps7a6fl.mongodb.net/cloudvault?appName=Cluster0
+```
+This is optional — the app works fine either way.
+
+## Security reminders
+
+- `.env` is already in `.gitignore` for both `backend/` and `frontend/` —
+  never commit it or paste its contents anywhere public.
+- The MongoDB user password in your connection string should eventually be
+  rotated if it's ever shared or exposed (Atlas → Database Access → Edit User).
+
+## Ideas for later
+
+- Folder/nesting UI in the frontend (the `folder` field already exists on `File`)
+- Storage quota enforcement using `User.storageUsed`
+- Email verification on signup
+
+
 ## API overview
 
 | Method | Route | Description |
