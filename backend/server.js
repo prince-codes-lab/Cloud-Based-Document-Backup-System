@@ -22,9 +22,9 @@ app.use(
 app.use(express.json());
 
 app.use("/auth", authRoutes);
-app.use("/api/files", fileRoutes);
+app.use("/files", fileRoutes);
 
-app.get("/api/health", (req, res) => res.json({ status: "ok" }));
+app.get("/health", (req, res) => res.json({ status: "ok" }));
 
 // Error handler — gives friendly messages for common upload errors instead of a generic 500
 app.use((err, req, res, next) => {
