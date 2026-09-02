@@ -1,0 +1,252 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
+
+:root {
+  --ink: #10161d;
+  --panel: #161e27;
+  --hairline: #2a3543;
+  --text: #e7eaee;
+  --muted: #8996a5;
+  --brass: #c9a227;
+  --brass-dim: #8f7420;
+  --danger: #c0554a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--text);
+  font-family: "Inter", -apple-system, sans-serif;
+  line-height: 1.5;
+}
+
+input,
+button {
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+/* --- Auth pages --- */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.auth-card h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+
+.auth-card label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+.auth-card input {
+  background: var(--panel);
+  border: 1px solid var(--hairline);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 4px;
+}
+
+.auth-card input:focus {
+  outline: none;
+  border-color: var(--brass);
+}
+
+.auth-card button {
+  margin-top: 18px;
+  background: var(--brass);
+  color: var(--ink);
+  border: none;
+  padding: 11px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-card button:hover {
+  background: var(--brass-dim);
+}
+
+.auth-card p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-top: 12px;
+}
+
+.auth-card a {
+  color: var(--brass);
+  text-decoration: none;
+}
+
+.error {
+  color: var(--danger);
+  font-size: 0.9rem;
+}
+
+/* --- Dashboard --- */
+.dashboard {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 16px;
+  margin-bottom: 8px;
+}
+
+.dashboard-header h1 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.user-info button {
+  background: none;
+  border: 1px solid var(--hairline);
+  color: var(--text);
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dashboard-tabs {
+  display: flex;
+  gap: 24px;
+  margin: 20px 0;
+}
+
+.dashboard-tabs button {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 0.95rem;
+  padding: 6px 0;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.dashboard-tabs button.active {
+  color: var(--text);
+  border-bottom-color: var(--brass);
+}
+
+.upload-box {
+  border: 1px dashed var(--hairline);
+  border-radius: 6px;
+  padding: 28px;
+  text-align: center;
+  color: var(--muted);
+  cursor: pointer;
+  margin-bottom: 16px;
+  transition: border-color 0.15s;
+}
+
+.upload-box.drag-over {
+  border-color: var(--brass);
+  color: var(--text);
+}
+
+.search-input {
+  width: 100%;
+  background: var(--panel);
+  border: 1px solid var(--hairline);
+  color: var(--text);
+  padding: 9px 12px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--brass);
+}
+
+.file-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.file-table th {
+  text-align: left;
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 0.8rem;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.file-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--hairline);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.85rem;
+}
+
+.file-table td:first-child {
+  font-family: "Inter", sans-serif;
+  font-size: 0.92rem;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  font-family: "Inter", sans-serif;
+}
+
+.actions button {
+  background: none;
+  border: 1px solid var(--hairline);
+  color: var(--text);
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.actions button:hover {
+  border-color: var(--brass);
+}
+
+.actions button.danger:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.empty-state {
+  color: var(--muted);
+  text-align: center;
+  padding: 40px 0;
+}
