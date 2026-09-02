@@ -185,7 +185,7 @@ a default database called `test`. If you'd prefer a named database (e.g.
 `cloudvault`), edit `MONGO_URI` in `backend/.env` to insert it before the
 `?`:
 ```
-mongodb+srv://elite:pr08035923401@cluster0.ps7a6fl.mongodb.net/cloudvault?appName=Cluster0
+mongodb+srv://elite:<password>@cluster0.ps7a6fl.mongodb.net/**********
 ```
 This is optional — the app works fine either way.
 
